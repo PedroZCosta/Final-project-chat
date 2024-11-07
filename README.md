@@ -2,13 +2,14 @@
 
 Este é um projeto de **Chat App** desenvolvido em **Flask** com **Tailwind CSS** e **Socket.IO**. O aplicativo permite que usuários se conectem, enviem mensagens privadas e públicas, além de exibir uma lista de usuários ativos.
 
+![Webchat](static/imagens/webchat(3).png)
+
+
 ## Índice
 
 - [Sobre](#sobre)
 - [Instalação](#instalação)
 - [Uso](#uso)
-- [Imagens](#imagens)
-- [Estrutura do Projeto](#estrutura-do-projeto)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Contribuição](#contribuição)
