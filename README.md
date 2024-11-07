@@ -1,43 +1,43 @@
 # Chat App
 
-Este é um projeto de **Chat App** desenvolvido em **Flask** com **Tailwind CSS** e **Socket.IO**. O aplicativo permite que usuários se conectem, enviem mensagens privadas e públicas, além de exibir uma lista de usuários ativos.
+This is a Chat App project developed in Flask with Tailwind CSS and Socket.IO. The app allows users to connect, send private and public messages, and displays a list of active users.
 
 ![Webchat](static/images/webchat(3).png)
 
 
-## Índice
+## Table of Contents
 
-- [Sobre](#sobre)
-- [Instalação](#instalação)
-- [Uso](#uso)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Contribuição](#contribuição)
+- [About](#About)
+- [Installation](#installation)
+- [Usage](#Usage)
+- [Features](#Features)
+- [Technologies Used](#Technologies-Used)
+- [Contributing](#Contributing)
 
-## Sobre
+## About
 
-Este projeto é um aplicativo de chat desenvolvido em Flask e utiliza o Socket.IO para permitir comunicação em tempo real entre usuários. Cada usuário pode enviar mensagens públicas e privadas, que são exibidas de forma distinta na interface.
+This project is a chat application developed in Flask and uses Socket.IO to enable real-time communication between users. Each user can send public and private messages, which are displayed distinctly in the interface.
 
-## Instalação
+## Installation
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/your-username/your-repository.git
    cd seu-repositorio
-## Funcionalidades
+## Features
 
-- **Lista de Usuários Online**: Exibe todos os usuários conectados ao chat.
-- **Mensagens Públicas**: Permite enviar mensagens para todos os usuários conectados.
-- **Mensagens Privadas**: Permite enviar mensagens diretamente para um usuário específico, exibindo o nome do remetente e indicando que a mensagem é privada.
-- **Mensagens em Tempo Real**: Usa o Socket.IO para atualizações em tempo real.
+- **Online User List**: Displays all users connected to the chat.
+- **Public Messages**: Allows sending messages to all connected users.
+- **Private Messages**: Allows sending messages directly to a specific user, showing the sender's name and indicating the message is private.
+- **Real-Time Messaging**: Uses Socket.IO for real-time updates.
 
-## Tecnologias Utilizadas
+## Technologies Used
 
-- **Flask**: Framework web para Python.
-- **Socket.IO**: Biblioteca para comunicação em tempo real.
-- **Tailwind CSS**: Framework de CSS para estilização.
-- **JavaScript**: Para funcionalidades interativas.
+- **Flask**: Web framework for Python.
+- **Socket.IO**: Library for real-time communication.
+- **Tailwind CSS**: CSS framework for styling.
+- **JavaScript**: For interactive features.
 
-## Contribuição
+## Contributing
 
-Sinta-se à vontade para contribuir com este projeto. Faça um fork do repositório, crie uma nova branch e envie um pull request com as suas alterações.
+Feel free to contribute to this project. Fork the repository, create a new branch, and submit a pull request with your changes.
