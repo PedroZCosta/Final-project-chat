@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<style>
+    .skeleton-loading {
+  background: linear-gradient(90deg, rgba(211,211,211,0.3) 25%, rgba(211,211,211,0.6) 50%, rgba(211,211,211,0.3) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  color: transparent;
+  background-clip: text;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+</style>
+<body class="flex items-center justify-center h-screen bg-blue-100">
+
+    <!-- Card Principal -->
+    <div class="w-full max-w-5xl  bg-white rounded-lg shadow-lg overflow-hidden flex">
+        
+        <!-- Sidebar de Usuários (1/4 da tela) -->
+        <div class="w-1/4 bg-blue-200 p-4">
+            <h2 class="text-xl font-semibold text-blue-900 mb-4">Usuários</h2>
+            <!-- Lista de Usuários -->
+            <div class="space-y-4">
+                <label class="flex items-center p-3 bg-blue-50 rounded-lg shadow-sm cursor-pointer hover:bg-blue-100" id="usuario1">
+                    <input type="radio" name="usuario" class="hidden" value="usuario1" onchange="selecionarUsuario(this)">
+                    <p class="font-medium text-gray-500 skeleton-loading">Carregando Usuários...</p>
+                </label>
+                <label class="flex items-center p-3 bg-blue-50 rounded-lg shadow-sm cursor-pointer hover:bg-blue-100" id="usuario2">
+                    <input type="radio" name="usuario" class="hidden" value="usuario2" onchange="selecionarUsuario(this)">
+                    <p class="font-medium text-gray-500 skeleton-loading">Carregando Usuários...</p>
+                </label>
+                <!-- Adicione mais usuários conforme necessário -->
+            </div>
+        </div>
+
+        <!-- Área de Chat (3/4 da tela) -->
+        <div class="w-3/4 flex flex-col bg-blue-50">
+            <!-- Header do Chat -->
+            <div class="p-4 bg-blue-300 text-white border-b border-blue-400">
+                <h3 id="chatHeader" class="text-lg font-semibold">Escolha um Usuario para conversar!</h3>
+            </div>
+
+            <!-- Área de Mensagens -->
+            <div class="flex-1 p-4 h-full overflow-y-auto" style="max-height: calc(90vh - 10rem);">
+            
+                <!-- Adicione mais mensagens conforme necessário -->
+            </div>
+
+            <!-- Campo de Entrada de Mensagem -->
+            <div class="p-4 bg-blue-100 border-t border-blue-200 flex items-center space-x-2">
+                <input type="text" placeholder="Digite uma mensagem..." class="flex-1 p-3 rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selecionarUsuario(radio) {
+            // Remove a classe de borda dos usuários
+            const usuarios = document.querySelectorAll('label');
+            usuarios.forEach(usuario => {
+                usuario.classList.remove('border', 'border-blue-500');
+            });
+
+            // Adiciona a classe de borda ao usuário selecionado
+            if (radio.checked) {
+                radio.parentElement.classList.add('border', 'border-blue-500');
+
+                // Atualiza o cabeçalho do chat com o nome do usuário selecionado
+                const nomeUsuario = radio.value === 'all' ? 'Todos' : radio.nextElementSibling.innerText;
+                document.getElementById('chatHeader').innerText = 'Chat com ' + nomeUsuario;
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.0.1/dist/socket.io.min.js"></script>
+    <script>
+        // Obtém o nome do usuário da URL
+        const params = new URLSearchParams(window.location.search);
+        const username = params.get('username');
+        const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+        // Envia a mensagem de entrada assim que a página é carregada
+        socket.emit('join', { username: username });
+
+        // Atualiza a lista de usuários conectados
+        socket.on('update_user_list', function(users) {
+            const userList = document.querySelector('.space-y-4');
+            userList.innerHTML = '';  // Limpa a lista atual
+
+            // Adiciona a opção "Todo"
+            const allRadio = document.createElement('label');
+            allRadio.classList.add('flex', 'items-center', 'p-3', 'bg-blue-50', 'rounded-lg', 'shadow-sm', 'cursor-pointer', 'hover:bg-blue-100');
+            const allInput = document.createElement('input');
+            allInput.type = 'radio';
+            allInput.name = 'usuario';
+            allInput.value = 'all';
+            allInput.classList.add('hidden');
+            allInput.onchange = function() { selecionarUsuario(this); };
+
+            const allText = document.createElement('p');
+            allText.classList.add('font-medium', 'text-blue-900');
+            allText.textContent = 'Todos';
+
+            allRadio.appendChild(allInput);
+            allRadio.appendChild(allText);
+            userList.appendChild(allRadio);
+
+            // Adiciona os usuários individuais
+            users.forEach(function(user) {
+                const userLabel = document.createElement('label');
+                userLabel.classList.add('flex', 'items-center', 'p-3', 'bg-blue-50', 'rounded-lg', 'shadow-sm', 'cursor-pointer', 'hover:bg-blue-100');
+
+                const userInput = document.createElement('input');
+                userInput.type = 'radio';
+                userInput.name = 'usuario';
+                userInput.value = user;
+                userInput.classList.add('hidden');
+                userInput.onchange = function() { selecionarUsuario(this); };
+
+                const userText = document.createElement('p');
+                userText.classList.add('font-medium', 'text-blue-900');
+                userText.textContent = user;
+
+                userLabel.appendChild(userInput);
+                userLabel.appendChild(userText);
+                userList.appendChild(userLabel);
+            });
+        });
+
+// Exibe a mensagem enviada pelo usuário
+document.querySelector('button').onclick = function() {
+    const msg = document.querySelector('input[type="text"]').value.trim();
+    const recipient = document.querySelector('input[name="usuario"]:checked'); // Obtém o recipient selecionado
+    if (msg === "") {
+            return;  // Não faz nada se a mensagem estiver em branco
+        }
+    if (recipient) {
+        const recipientName = recipient.value; // Nome do destinatário
+        let displayedMessage;
+
+        if (recipientName === 'all') {
+            // Envia mensagem para todos
+            socket.emit('message', { username: username, msg: msg });
+            displayedMessage = msg; // Mensagem enviada normalmente
+        } else {
+            // Envia mensagem privada
+            socket.emit('private_message', { username: username, recipient: recipientName, msg: msg });
+            displayedMessage = `Privado para ${recipientName}: ${msg}`; // Mensagem privada com formatação corrigida
+        }
+
+        // Exibe a mensagem enviada
+        const messages = document.querySelector('.flex-1');
+        const sentMessage = document.createElement('div');
+        sentMessage.classList.add('mb-4', 'flex', 'justify-end');
+
+        const sentMessageText = document.createElement('p');
+        sentMessageText.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded-lg', 'w-max', 'mt-2', 'break-words'); // Adicionada a classe break-words
+        sentMessageText.textContent = displayedMessage;
+
+        sentMessage.appendChild(sentMessageText);
+        messages.appendChild(sentMessage);
+        messages.scrollTop = messages.scrollHeight;  // Rola para a última mensagem
+
+        // Limpa o campo de entrada
+        document.querySelector('input[type="text"]').value = '';
+    }
+};
+
+
+        // Exibe as mensagens recebidas
+        socket.on('message', function(data) {
+            const messages = document.querySelector('.flex-1');
+            const message = document.createElement('div');
+            const messageText = document.createElement('p');
+
+            // Verifica se a mensagem é do próprio usuário
+            if (data.username === username) {
+                // Mensagem enviada pelo próprio usuário não deve aparecer novamente
+                return;
+            } else {
+                // Mensagem recebida de outro usuário
+                messageText.classList.add('bg-blue-200', 'p-3', 'rounded-lg', 'w-max', 'text-blue-900', 'break-words', 'mt-2'); // Adicionada a classe break-words
+                messageText.textContent = data.msg;
+            }
+
+            message.appendChild(messageText);
+            messages.appendChild(message);
+            messages.scrollTop = messages.scrollHeight;  // Rola para a última mensagem
+        });
+
+        socket.on('private_message', function(data) {
+    const messages = document.querySelector('.flex-1');
+    const message = document.createElement('div');
+    const messageText = document.createElement('p');
+
+    // Mensagem privada recebida
+    messageText.classList.add('bg-blue-200', 'p-3', 'rounded-lg', 'w-max', 'text-blue-900', 'break-words', 'mt-2'); // Adicionada a classe break-words
+    messageText.textContent = `Privado de ${data.username}: ${data.msg}`; // Corrigido aqui
+
+    message.appendChild(messageText); 
+    messages.appendChild(message);
+    messages.scrollTop = messages.scrollHeight;  // Rola para a última mensagem
+});
+
+    </script>
+</body>
+</html>
