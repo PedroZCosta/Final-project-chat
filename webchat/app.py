@@ -76,4 +76,4 @@ def handle_private_message(data):
         emit('message', {'msg': f"Usuário {recipient_name} não encontrado."}, room=request.sid)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, host='127.0.0.1', port=5000, debug=True)
