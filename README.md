@@ -24,6 +24,18 @@ This project is a chat application developed in Flask and uses Socket.IO to enab
    ```bash
    git clone https://github.com/your-username/your-repository.git
    cd seu-repositorio
+
+## Dependencies
+
+This project requires a few external libraries that need to be installed before running the code.
+
+### Requirements
+
+- [Python 3.x](https://www.python.org/) installed on your system
+
+  ```bash
+   pip install -r requirements.txt
+   
 ## Features
 
 - **Online User List**: Displays all users connected to the chat.
