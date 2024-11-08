@@ -31,7 +31,7 @@ This project requires a few external libraries that need to be installed before 
 
 ### Requirements
 
-- [Python 3.x](https://www.python.org/) installed on your system
+- [Python 3.x](https://www.python.org/)  installed on your system
 
   ```bash
    pip install -r requirements.txt
