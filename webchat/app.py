@@ -27,7 +27,10 @@ def atualizar_lista_usuarios():
 @socketio.on('join')
 def handle_join(data):
     username = data['username']
+    client_ip = request.remote_addr # Coleta o IP do usuário
+    client_port = request.environ.get('REMOTE_PORT', 'Desconhecida') # Coleta a Porta do usuário
     clients[request.sid] = username  # Adiciona o usuário ao dicionário
+    print(f'{username} entrou no chat! IP: {client_ip}, Porta: {client_port}') 
     emit('message', {'msg': f"{username} entrou no chat!"}, broadcast=True, include_self=False)
     atualizar_lista_usuarios()  # Envia a lista atualizada a todos
 
