@@ -9,7 +9,7 @@ This is a Chat App project developed in Flask with Tailwind CSS and Socket.IO. T
 
 - [About](#About)
 - [Installation](#installation)
-- [Usage](#Usage)
+- [Dependencies](#Dependencies)
 - [Features](#Features)
 - [Technologies Used](#Technologies-Used)
 - [Contributing](#Contributing)
